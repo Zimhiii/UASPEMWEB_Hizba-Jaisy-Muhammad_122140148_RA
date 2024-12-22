@@ -6,17 +6,13 @@ session_start();
 require_once 'config/database.php';
 require_once 'classes/Participant.php';
 
-// Inisialisasi variabel filter
 $filter = isset($_GET['filter']) ? $_GET['filter'] : '';
-
-// Bagian 2.2: OOP
 $participant = new Participant($conn);
 
-// Ambil data peserta sesuai filter
 if ($filter) {
-    $participants = $participant->filterParticipants($filter); // Gunakan method filter
+    $participants = $participant->filterParticipants($filter);
 } else {
-    $participants = $participant->getAllParticipants(); // Gunakan method default
+    $participants = $participant->getAllParticipants();
 }
 ?>
 
@@ -26,71 +22,101 @@ if ($filter) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Peserta Lomba Tahfidz</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gray-100">
-    <!-- Navigation same as other pages -->
-    <nav class="relative bg-green-600 text-white p-4 pb-8 flex items-center flex-col">
-        <h1 class="text-2xl font-bold">Lomba Tahfidz Quran</h1>
-        <div class="absolute inset-0 mx-auto mt-[60px] bg-blue-500 w-fit h-fit bg-white text-green-600 px-4 py-2 rounded shadow-md flex gap-4">
-            <a href="index.php" class="hover:text-green-900 hover:underline hover:decoration-green-800 animation-all transform hover:scale-110">Home</a>
-            <a href="register.php" class="hover:text-green-900 hover:underline hover:decoration-green-800 animation-all transform hover:scale-110">Daftar</a>
-            <a href="participants.php" class="hover:text-green-900 hover:underline hover:decoration-green-800 animation-all transform hover:scale-110">Peserta</a>
+<body>
+    <nav class="nav-container">
+        <h1 class="nav-title">Lomba Tahfidz Quran</h1>
+        <div class="nav-links">
+            <a href="index.php" class="nav-link">Home</a>
+            <a href="register.php" class="nav-link">Daftar</a>
+            <a href="participants.php" class="nav-link">Peserta</a>
         </div>
     </nav>
 
-    <main class="container mx-auto mt-8 p-4">
-        <div class="bg-white rounded-lg shadow-lg p-8">
-            <h2 class="text-3xl font-bold text-center text-green-600 mb-6">Daftar Peserta</h2>
-            
-            <!-- Bagian 1.1: Filter Input -->
-            <form method="GET" class="mb-4">
-                <input 
-                    type="text" 
-                    name="filter" 
-                    value="<?php echo htmlspecialchars($filter); ?>" 
-                    class="w-full px-4 py-2 border rounded" 
-                    placeholder="Filter peserta berdasarkan nama, tingkat pendidikan, atau tingkat hafalan..."
-                >
-                <button type="submit" class="mt-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
-                    Cari
-                </button>
-            </form>
-            
-            <!-- Bagian 1.1: Tabel -->
-            <div class="overflow-x-auto">
-                <table class="w-full table-auto">
-                    <thead class="bg-green-100">
+    <main class="content-card">
+        <h2 class="section-title">Daftar Peserta</h2>
+        
+        <form method="GET" class="form-group">
+            <input 
+                type="text" 
+                name="filter" 
+                value="<?php echo htmlspecialchars($filter); ?>" 
+                class="form-input"
+                placeholder="Filter peserta berdasarkan nama, tingkat pendidikan, atau tingkat hafalan..."
+            >
+            <button type="submit" class="submit-btn">Cari</button>
+        </form>
+        
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Tingkat Pendidikan</th>
+                        <th>Tingkat Hafalan</th>
+                        <th>Nomor Telepon</th>
+                        <th>Browser</th>
+                        <th>IP Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (empty($participants)): ?>
                         <tr>
-                            <th class="px-4 py-2 text-left">Nama</th>
-                            <th class="px-4 py-2 text-left">Tingkat Pendidikan</th>
-                            <th class="px-4 py-2 text-left">Tingkat Hafalan</th>
-                            <th class="px-4 py-2 text-left">Nomor Telepon</th>
-                            <th class="px-4 py-2 text-left">Browser</th>
-                            <th class="px-4 py-2 text-left">Ip Address</th>
+                            <td colspan="6" class="text-center">Tidak ada peserta yang ditemukan.</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (empty($participants)): ?>
-                            <tr>
-                                <td colspan="6" class="text-center py-4">Tidak ada peserta yang ditemukan.</td>
-                            </tr>
-                        <?php else: ?>
-                            <?php foreach ($participants as $p): ?>
-                            <tr class="border-b hover:bg-gray-50">
+                    <?php else: ?>
+                        <?php foreach ($participants as $p): ?>
+                        <tr>
                                 <td class="px-4 py-2"><?php echo htmlspecialchars($p['name']); ?></td>
                                 <td class="px-4 py-2"><?php echo htmlspecialchars($p['education_level']); ?></td>
                                 <td class="px-4 py-2"><?php echo htmlspecialchars($p['memorization_level']); ?></td>
                                 <td class="px-4 py-2"><?php echo htmlspecialchars($p['phone']); ?></td>
                                 <td class="px-4 py-2"><?php echo htmlspecialchars($p['browser']); ?></td>
                                 <td class="px-4 py-2"><?php echo htmlspecialchars($p['ip_address']); ?></td>
-                            </tr>
-                            <?php endforeach; ?>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
+                        </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
         </div>
     </main>
+
+    <script>
+        // Add any additional JavaScript functionality here
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add smooth scrolling to all links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Add hover effects to table rows
+            const tableRows = document.querySelectorAll('.data-table tbody tr');
+            tableRows.forEach(row => {
+                row.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.01)';
+                    this.style.transition = 'all 0.3s ease';
+                });
+                row.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+
+            // Add animation to form submission
+            const form = document.querySelector('form');
+            if(form) {
+                form.addEventListener('submit', function() {
+                    this.style.opacity = '0.7';
+                    this.style.transform = 'scale(0.98)';
+                    this.style.transition = 'all 0.3s ease';
+                });
+            }
+        });
+    </script>
 </body>
 </html>

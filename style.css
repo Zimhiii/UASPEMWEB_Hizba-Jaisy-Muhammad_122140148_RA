@@ -1,0 +1,190 @@
+/* style.css */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Quicksand:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --primary-red: #ff0000;
+  --dark-red: #8b0000;
+  --pure-black: #000000;
+  --dark-gray: #1a1a1a;
+  --light-gray: #333333;
+  --white: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Quicksand", sans-serif;
+}
+
+body {
+  background-color: var(--pure-black);
+  color: var(--white);
+}
+
+.nav-container {
+  background: linear-gradient(135deg, var(--dark-red), var(--pure-black));
+  padding: 1rem;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+}
+
+.nav-title {
+  font-family: "Cinzel", serif;
+  font-size: 2.5rem;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.5);
+}
+
+.nav-links {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -25px;
+  background: var(--dark-gray);
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  display: flex;
+  gap: 2rem;
+  box-shadow: 0 4px 15px rgba(255, 0, 0, 0.2);
+}
+
+.nav-link {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary-red);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.hero-section {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("https://example.com/quran-bg.jpg");
+  background-size: cover;
+  padding: 6rem 2rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.content-card {
+  background: var(--dark-gray);
+  border-radius: 15px;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 1200px;
+  box-shadow: 0 4px 15px rgba(255, 0, 0, 0.1);
+}
+
+.section-title {
+  font-family: "Cinzel", serif;
+  color: var(--primary-red);
+  margin-bottom: 1.5rem;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.info-card {
+  background: var(--light-gray);
+  padding: 1.5rem;
+  border-radius: 10px;
+  border-left: 4px solid var(--primary-red);
+}
+
+/* Form Styles */
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.8rem;
+  background: var(--light-gray);
+  border: 1px solid var(--dark-red);
+  border-radius: 5px;
+  color: var(--white);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-red);
+  box-shadow: 0 0 5px rgba(255, 0, 0, 0.3);
+}
+
+.submit-btn {
+  background: var(--dark-red);
+  color: var(--white);
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  position: relative;
+}
+
+.submit-btn-hero {
+  background: var(--dark-red);
+  color: var(--white);
+  padding: 1rem 0rem;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  text-decoration: none;
+}
+
+.submit-btn:hover {
+  background: var(--primary-red);
+  transform: translateY(-2px);
+}
+
+/* Table Styles */
+.table-container {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th {
+  background: var(--dark-red);
+  padding: 1rem;
+  text-align: left;
+}
+
+.data-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.data-table tr:hover {
+  background: var(--light-gray);
+}
