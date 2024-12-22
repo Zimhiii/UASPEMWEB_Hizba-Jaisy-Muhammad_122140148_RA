@@ -2,6 +2,25 @@
 // Bagian 4.1: Session Management
 session_start();
 
+// Bagian 4.2: Cookie Management
+require_once 'config/database.php';
+
+// Store form data temporarily in cookies if submission fails
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_SESSION['message'])) {
+    setCookieValue('temp_name', $_POST['name'], 1);
+    setCookieValue('temp_education_level', $_POST['education_level'], 1);
+    setCookieValue('temp_memorization_level', $_POST['memorization_level'], 1);
+    setCookieValue('temp_phone', $_POST['phone'], 1);
+}
+
+// Clear temporary form data cookies after successful submission
+if (isset($_SESSION['message'])) {
+    deleteCookie('temp_name');
+    deleteCookie('temp_education_level');
+    deleteCookie('temp_memorization_level');
+    deleteCookie('temp_phone');
+}
+
 // Bagian 2.1: Server-side Programming
 require_once 'config/database.php';
 require_once 'classes/Participant.php';
@@ -28,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Pendaftaran Lomba Tahfidz</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <nav class="nav-container">
         <h1 class="nav-title">Lomba Tahfidz Quran</h1>
@@ -41,14 +61,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <main class="content-card">
         <div class="form-container">
             <h2 class="section-title">Formulir Pendaftaran</h2>
-            
             <form id="registrationForm" method="POST" class="form-group">
+                <!-- <div class="form-group">
+                    <label for="name">Nama Lengkap</label>
+                    <input type="text" id="name" name="name" class="form-input" placeholder="NAMA" >
+                </div> -->
                 <div class="form-group">
                     <label for="name">Nama Lengkap</label>
-                    <input type="text" id="name" name="name" class="form-input" >
+                    <input type="text" id="name" name="name" class="form-input" 
+                    value="<?php echo getCookieValue('temp_name') ?? ''; ?>" placeholder="NAMA">
                 </div>
                 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="education_level">Tingkat Pendidikan</label>
                     <select id="education_level" name="education_level" class="form-input" >
                         <option value="">Pilih Tingkat Pendidikan</option>
@@ -70,16 +94,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <option value="20 Juz">20 Juz</option>
                         <option value="30 Juz">30 Juz</option>
                     </select>
+                </div> -->
+                <div class="form-group">
+                    <label for="memorization_level">Tingkat Hafalan</label>
+                    <select id="memorization_level" name="memorization_level" class="form-input">
+                        <option value="">Pilih Tingkat Hafalan</option>
+                        <?php
+                        $levels = ['Juz 30', '5 Juz', '10 Juz', '15 Juz', '20 Juz', '30 Juz'];
+                        $selected = getCookieValue('temp_memorization_level');
+                        foreach ($levels as $level) {
+                            echo '<option value="' . $level . '"' . 
+                                 ($selected === $level ? ' selected' : '') . '>' . $level . '</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="education_level">Tingkat Pendidikan</label>
+                    <select id="education_level" name="education_level" class="form-input">
+                        <option value="">Pilih Tingkat Pendidikan</option>
+                        <?php
+                        $levels = ['SD', 'SMP', 'SMA', 'Kuliah'];
+                        $selected = getCookieValue('temp_education_level');
+                        foreach ($levels as $level) {
+                            echo '<option value="' . $level . '"' . 
+                                 ($selected === $level ? ' selected' : '') . '>' . 
+                                 ($level === 'Kuliah' ? 'Perguruan Tinggi' : $level) . '</option>';
+                        }
+                        ?>
+                    </select>
                 </div>
 
                 <div class="form-group">
                     <label for="phone">Nomor Telepon</label>
-                    <input type="tel" id="phone" name="phone" class="form-input" >
+                    <input type="tel" id="phone" name="phone" class="form-input" value="<?php echo getCookieValue('temp_phone') ?? ''; ?>" >
                 </div>
-
                 <button type="submit" class="submit-btn">Daftar Sekarang</button>
             </form>
         </div>
     </main>
+    <script src="js/main.js"></script>
 </body>
 </html>

@@ -1,4 +1,20 @@
 <?php
+// // Bagian 4.1: Session Management
+// session_start();
+
+
+
+// // Bagian 2.1: Get user browser and IP
+// $browser = $_SERVER['HTTP_USER_AGENT'];
+// $ip_address = $_SERVER['REMOTE_ADDR'];
+
+// // Store in session
+// $_SESSION['browser'] = $browser;
+// $_SESSION['ip_address'] = $ip_address;
+
+
+// mulai
+
 // Bagian 4.1: Session Management
 session_start();
 
@@ -9,6 +25,20 @@ $ip_address = $_SERVER['REMOTE_ADDR'];
 // Store in session
 $_SESSION['browser'] = $browser;
 $_SESSION['ip_address'] = $ip_address;
+
+// Bagian 4.2: Cookie Management
+require_once 'config/database.php';
+
+// Set last visit cookie
+setCookieValue('last_visit', date('Y-m-d H:i:s'));
+
+// Store preferred language if set
+if (isset($_POST['language'])) {
+    setCookieValue('preferred_language', $_POST['language']);
+}
+
+// Get last visit info
+$lastVisit = getCookieValue('last_visit');
 ?>
 
 <!DOCTYPE html>

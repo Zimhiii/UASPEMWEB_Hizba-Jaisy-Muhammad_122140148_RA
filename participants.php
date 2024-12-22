@@ -2,6 +2,17 @@
 // Bagian 4.1: Session Management
 session_start();
 
+// Bagian 4.2: Cookie Management
+require_once 'config/database.php';
+
+// Store last search filter
+if (isset($_GET['filter'])) {
+    setCookieValue('last_search', $_GET['filter']);
+}
+
+// Get last search
+$lastSearch = getCookieValue('last_search');
+
 // Bagian 2.1: Server-side Programming
 require_once 'config/database.php';
 require_once 'classes/Participant.php';
@@ -38,13 +49,14 @@ if ($filter) {
         <h2 class="section-title">Daftar Peserta</h2>
         
         <form method="GET" class="form-group">
-            <input 
-                type="text" 
-                name="filter" 
-                value="<?php echo htmlspecialchars($filter); ?>" 
-                class="form-input"
-                placeholder="Filter peserta berdasarkan nama, tingkat pendidikan, atau tingkat hafalan..."
-            >
+        <!-- // Modify the filter input to use cookie value -->
+                <input 
+                    type="text" 
+                    name="filter" 
+                    value="<?php echo htmlspecialchars($filter ?: $lastSearch); ?>" 
+                    class="form-input"
+                    placeholder="Filter peserta berdasarkan nama, tingkat pendidikan, atau tingkat hafalan..."
+                >
             <button type="submit" class="submit-btn">Cari</button>
         </form>
         
@@ -84,7 +96,7 @@ if ($filter) {
 
     <script>
         // Add any additional JavaScript functionality here
-        document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function() {
             // Add smooth scrolling to all links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {

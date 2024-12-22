@@ -72,3 +72,79 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+// Bagian 1.1: Validation (15%)
+document
+  .getElementById("registrationForm")
+  .addEventListener("submit", function (e) {
+    let isValid = true;
+    const name = document.getElementById("name");
+    const educationLevel = document.getElementById("education_level");
+    const memorizationLevel = document.getElementById("memorization_level");
+    const phone = document.getElementById("phone");
+
+    // Reset error messages
+    document.querySelectorAll(".error-message").forEach((el) => el.remove());
+
+    // Name validation
+    if (name.value.trim() === "") {
+      showError(name, "Nama tidak boleh kosong.");
+      isValid = false;
+    }
+
+    // Education level validation
+    if (educationLevel.value === "") {
+      showError(educationLevel, "Pilih tingkat pendidikan.");
+      isValid = false;
+    }
+
+    // Memorization level validation
+    if (memorizationLevel.value === "") {
+      showError(memorizationLevel, "Pilih tingkat hafalan.");
+      isValid = false;
+    }
+
+    // Phone number validation
+    if (!/^\d{10,12}$/.test(phone.value)) {
+      showError(phone, "Nomor telepon harus berisi 10-12 digit angka.");
+      isValid = false;
+    }
+
+    if (!isValid) e.preventDefault();
+  });
+
+function showError(input, message) {
+  const error = document.createElement("span");
+  error.className = "error-message";
+  error.style.color = "red";
+  error.innerText = message;
+  input.parentElement.appendChild(error);
+}
+
+// Bagian 1.2: Event Handling (15%)
+
+// Event 1: Menampilkan jumlah karakter di input nama
+document.getElementById("name").addEventListener("input", function () {
+  const charCount = document.getElementById("charCount");
+  if (!charCount) {
+    const counter = document.createElement("span");
+    counter.id = "charCount";
+    counter.style.fontSize = "12px";
+    counter.style.color = "gray";
+    this.parentElement.appendChild(counter);
+  }
+  document.getElementById(
+    "charCount"
+  ).innerText = ` (${this.value.length} karakter)`;
+});
+
+document
+  .getElementById("registrationForm")
+  .addEventListener("submit", function (e) {
+    const name = document.getElementById("name").value;
+    const educationLevel = document.getElementById("education_level").value;
+    if (!name || !educationLevel) {
+      e.preventDefault();
+      alert("Semua field harus diisi!");
+    }
+  });
