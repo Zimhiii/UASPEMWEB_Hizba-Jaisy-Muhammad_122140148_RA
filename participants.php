@@ -21,7 +21,7 @@ $participants = $participant->getAllParticipants();
 </head>
 <body class="bg-gray-100">
     <!-- Navigation same as other pages -->
-    <nav class="bg-green-600 text-white p-4">
+    <!-- <nav class="bg-green-600 text-white p-4">
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold">Lomba Tahfidz Quran</h1>
             <div class="space-x-4">
@@ -29,6 +29,15 @@ $participants = $participant->getAllParticipants();
                 <a href="register.php" class="hover:text-green-200">Daftar</a>
                 <a href="participants.php" class="hover:text-green-200">Peserta</a>
             </div>
+        </div>
+    </nav> -->
+
+    <nav class="relative bg-green-600 text-white p-4 pb-8 flex items-center flex-col">
+        <h1 class="text-2xl font-bold">Lomba Tahfidz Quran</h1>
+        <div class="absolute inset-0 mx-auto mt-[60px] bg-blue-500 w-fit h-fit bg-white text-green-600 px-4 py-2 rounded shadow-md flex gap-4">
+            <a href="index.php" class="hover:text-green-900 hover:underline hover:decoration-green-800 animation-all transform hover:scale-110">Home</a>
+            <a href="register.php" class="hover:text-green-900 hover:underline hover:decoration-green-800 animation-all transform hover:scale-110">Daftar</a>
+            <a href="participants.php" class="hover:text-green-900 hover:underline hover:decoration-green-800 animation-all transform hover:scale-110">Peserta</a>
         </div>
     </nav>
 
@@ -45,6 +54,8 @@ $participants = $participant->getAllParticipants();
                             <th class="px-4 py-2 text-left">Tingkat Pendidikan</th>
                             <th class="px-4 py-2 text-left">Tingkat Hafalan</th>
                             <th class="px-4 py-2 text-left">Nomor Telepon</th>
+                            <th class="px-4 py-2 text-left">Browser</th>
+                            <th class="px-4 py-2 text-left">Ip Adress</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,6 +65,8 @@ $participants = $participant->getAllParticipants();
                             <td class="px-4 py-2"><?php echo htmlspecialchars($p['education_level']); ?></td>
                             <td class="px-4 py-2"><?php echo htmlspecialchars($p['memorization_level']); ?></td>
                             <td class="px-4 py-2"><?php echo htmlspecialchars($p['phone']); ?></td>
+                            <td class="px-4 py-2"><?php echo htmlspecialchars($p['browser']); ?></td>
+                            <td class="px-4 py-2"><?php echo htmlspecialchars($p['ip_address']); ?></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
