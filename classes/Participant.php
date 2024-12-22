@@ -46,5 +46,17 @@ class Participant {
             return [];
         }
     }
+
+    public function filterParticipants($filter) {
+        $query = "SELECT * FROM participants WHERE 
+                  name LIKE :filter OR 
+                  education_level LIKE :filter OR 
+                  memorization_level LIKE :filter";
+        $stmt = $this->db->prepare($query); // Menggunakan $this->db
+        $stmt->execute(['filter' => '%' . $filter . '%']);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    
 }
 ?>
