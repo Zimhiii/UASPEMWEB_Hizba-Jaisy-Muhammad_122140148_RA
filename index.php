@@ -1,20 +1,5 @@
 <?php
-// // Bagian 4.1: Session Management
-// session_start();
-
-
-
-// // Bagian 2.1: Get user browser and IP
-// $browser = $_SERVER['HTTP_USER_AGENT'];
-// $ip_address = $_SERVER['REMOTE_ADDR'];
-
-// // Store in session
-// $_SESSION['browser'] = $browser;
-// $_SESSION['ip_address'] = $ip_address;
-
-
 // mulai
-
 // Bagian 4.1: Session Management
 session_start();
 

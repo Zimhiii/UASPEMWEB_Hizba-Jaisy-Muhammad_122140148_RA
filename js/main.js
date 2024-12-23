@@ -148,3 +148,24 @@ document
       alert("Semua field harus diisi!");
     }
   });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const formElements = document.querySelectorAll(
+    "#registrationForm .form-input"
+  );
+
+  formElements.forEach((element, index) => {
+    element.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault(); // Mencegah submit form
+        const nextElement = formElements[index + 1];
+        if (nextElement) {
+          nextElement.focus();
+        } else {
+          // Jika tidak ada elemen berikutnya, fokus pada tombol submit
+          document.querySelector("#registrationForm .submit-btn").focus();
+        }
+      }
+    });
+  });
+});
